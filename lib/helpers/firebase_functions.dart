@@ -4,13 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:thriftly/data/models/thriftlyuser.dart';
 
-// Future<NsksUser> getAnyUserFromFirebaseUserUid(String userUID) async {
-//   CollectionReference users = FirebaseFirestore.instance.collection('users');
-//   DocumentReference doc = users.doc(userUID);
-//   DocumentSnapshot snapshot = await doc.get();
-//   final finalUser = NsksUser.lessFromSnapshot(snapshot);
-//   return finalUser;
-// }
+Future<ThriftlyUser> getAnyUserFromFirebaseUserUid(String userUID) async {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  DocumentReference doc = users.doc(userUID);
+  DocumentSnapshot snapshot = await doc.get();
+  final finalUser = ThriftlyUser.lessFromSnapshot(snapshot);
+  return finalUser;
+}
 
 Future<ThriftlyUser> getCurrentUserFromFirebaseUser(User? user) async {
   CollectionReference users = FirebaseFirestore.instance.collection('users');

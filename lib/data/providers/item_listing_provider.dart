@@ -80,4 +80,28 @@ class ItemListingProvider {
 
     return post.get();
   }
+
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> createOutfitInspo({
+    required String caption,
+    required Timestamp createdAt,
+    required File imageFile,
+    required String creator,
+  }) async {
+    String imageFileUrl = await uploadImageToFirebase(imageFile);
+
+    DocumentReference<Map<String, dynamic>> post =
+        await firestore.collection("outfitInspo").add({
+      "caption": caption,
+      "createdAt" : createdAt,
+      "imageUrl": imageFileUrl,
+      "creator" : creator,
+    });
+
+    await firestore.collection("outfitInspo").doc(post.id).set({
+      "uid" : post.id,
+    }, SetOptions(merge : true));
+
+    return post.get();
+  }
 }

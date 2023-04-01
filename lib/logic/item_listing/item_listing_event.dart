@@ -38,6 +38,22 @@ class CreateItemListing extends ItemListingEvent {
       ];
 }
 
+class CreateOutfitInspoEvent extends ItemListingEvent {
+  final String caption;
+  final File imageFile;
+
+  CreateOutfitInspoEvent({
+    required this.caption,
+    required this.imageFile,
+  });
+
+  @override
+  List<Object> get props => [
+        caption,
+        imageFile,
+      ];
+}
+
 class DeletePost extends ItemListingEvent {
   final int id;
 
@@ -69,6 +85,6 @@ class NavigateToDetailPage extends ItemListingEvent {
   List<Object> get props => [uid];
 }
 
-class NavigateToPostsPage extends ItemListingEvent {}
+class NavigateToCreateItemListingForm extends ItemListingEvent {}
 
-class NavigateToSettingsPage extends ItemListingEvent {}
+class NavigateToPostOutfitInspo extends ItemListingEvent {}

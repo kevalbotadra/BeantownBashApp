@@ -97,4 +97,19 @@ class ItemListingRepository {
         creator: creator.uid,
         );
   }
+  Future<void> createOutfitInspo({
+    required String caption,
+    required File imageFile,
+    required ThriftlyUser creator,
+  }) async {
+    Timestamp createdAtStamp = dateTimeToTimestamp(DateTime.now());
+
+
+    await _itemListingProvider.createOutfitInspo(
+        caption: caption,
+        createdAt: createdAtStamp,
+        imageFile: imageFile,
+        creator: creator.uid,
+        );
+  }
 }

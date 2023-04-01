@@ -19,6 +19,10 @@ class ItemListingBloc extends Bloc<ItemListingEvent, ItemListingState> {
       yield* _mapCreateItemListingToState(event);
     }
 
+    if (event is CreateOutfitInspoEvent) {
+      yield* _mapCreateOutfitInspoState(event);
+    }
+
     // if (event is GetPosts) {
     //   yield* _mapGetPostsToState(event);
     // }
@@ -26,6 +30,14 @@ class ItemListingBloc extends Bloc<ItemListingEvent, ItemListingState> {
     // if (event is AcceptPost) {
     //   yield* _mapAcceptPostToState(event);
     // }
+
+    if (event is NavigateToCreateItemListingForm) {
+      yield RedirectToCreateItemListing();
+    }
+
+    if (event is NavigateToPostOutfitInspo) {
+      yield RedirectToPostOutfitInspo();
+    }
   }
 
   Stream<ItemListingState> _mapCreateItemListingToState(
@@ -44,6 +56,29 @@ class ItemListingBloc extends Bloc<ItemListingEvent, ItemListingState> {
             FirebaseAuth.instance.currentUser),
       );
       yield ItemListingCreated();
+      yield ItemListingInitial();
+      print('here');
+    } on ItemListingException catch (e) {
+      yield PostFailure(error: e.message);
+    } catch (error) {
+      print(error.toString());
+      yield PostFailure(error: error.toString());
+    }
+  }
+
+  Stream<ItemListingState> _mapCreateOutfitInspoState(
+      CreateOutfitInspoEvent event) async* {
+    yield ItemListingLoading();
+    print(FirebaseAuth.instance.currentUser?.uid);
+    try {
+      await _itemListingRepository.createOutfitInspo(
+        caption: event.caption,
+        imageFile: event.imageFile,
+        creator: await getCurrentUserFromFirebaseUser(
+            FirebaseAuth.instance.currentUser),
+      );
+      yield ItemListingCreated();
+      yield ItemListingInitial();
       print('here');
     } on ItemListingException catch (e) {
       yield PostFailure(error: e.message);
