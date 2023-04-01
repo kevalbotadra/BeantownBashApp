@@ -20,7 +20,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  TextEditingController confirmPasswordController = new TextEditingController();
+  TextEditingController phoneNumberController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +70,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
               controller: emailController,
             ),
             WhiteRoundedCircularInput(
-              icon: Icons.lock,
-              placeholder: "Password",
-              controller: passwordController,
+              icon: Icons.phone,
+              placeholder: "Phone Number",
+              controller: phoneNumberController,
             ),
             WhiteRoundedCircularInput(
               icon: Icons.lock,
-              placeholder: "Confirm Password",
-              controller: confirmPasswordController,
+              placeholder: "Password",
+              controller: passwordController,
             ),
             SizedBox(
               height: 15,
@@ -94,17 +94,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: Center(
                 child: MaterialButton(
                   onPressed: () {
-                    if (passwordController.text
-                            .compareTo(confirmPasswordController.text) ==
-                        0) {
-                      authBloc.add(SubmitSignUp(
-                          name: nameController.text,
-                          email: emailController.text,
-                          password: passwordController.text));
-                      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      //   builder: (context) => Home(),
-                      // ));
-                    }
+                    authBloc.add(SubmitSignUp(
+                        name: nameController.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                        phoneNumber: phoneNumberController.text));
                   },
                   child: Text(
                     "Register",

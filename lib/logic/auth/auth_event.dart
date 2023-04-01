@@ -23,9 +23,10 @@ class SubmitSignUp extends AuthEvent {
   final String name;
   final String email;
   final String password;
+  final String phoneNumber;
 
   SubmitSignUp(
-      {required this.name, required this.email, required this.password});
+      {required this.name, required this.email, required this.password, required this.phoneNumber});
 
   @override
   List<Object> get props => [name, email, password];

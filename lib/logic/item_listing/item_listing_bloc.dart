@@ -23,9 +23,13 @@ class ItemListingBloc extends Bloc<ItemListingEvent, ItemListingState> {
       yield* _mapCreateOutfitInspoState(event);
     }
 
-    // if (event is GetPosts) {
-    //   yield* _mapGetPostsToState(event);
-    // }
+    if (event is GetOutfitInspos) {
+      yield* _mapGetOutfitInsposToState(event);
+    }
+
+    if (event is GetItems) {
+      yield* _mapGetItemListingsToState(event);
+    }
 
     // if (event is AcceptPost) {
     //   yield* _mapAcceptPostToState(event);
@@ -37,6 +41,12 @@ class ItemListingBloc extends Bloc<ItemListingEvent, ItemListingState> {
 
     if (event is NavigateToPostOutfitInspo) {
       yield RedirectToPostOutfitInspo();
+    }
+
+    if (event is NavigateToItemListingDetail) {
+      yield RedirectToItemListingDetail(
+        itemListing: event.itemListing,
+      );
     }
   }
 
@@ -66,6 +76,24 @@ class ItemListingBloc extends Bloc<ItemListingEvent, ItemListingState> {
     }
   }
 
+  Stream<ItemListingState> _mapGetItemListingsToState(
+      ItemListingEvent event) async* {
+    yield ItemListingLoading();
+    final itemListings = await _itemListingRepository.getItemListings();
+    print(itemListings);
+    if (itemListings != null) {
+      yield ItemListingsObtained(itemListings: itemListings);
+    } else {
+      yield PostFailure(error: 'Something very weird just happened');
+    }
+    try {} on ItemListingException catch (e) {
+      yield PostFailure(error: e.message);
+    } catch (error) {
+      print(error.toString());
+      yield PostFailure(error: error.toString());
+    }
+  }
+
   Stream<ItemListingState> _mapCreateOutfitInspoState(
       CreateOutfitInspoEvent event) async* {
     yield ItemListingLoading();
@@ -88,21 +116,22 @@ class ItemListingBloc extends Bloc<ItemListingEvent, ItemListingState> {
     }
   }
 
-  // Stream<PostState> _mapGetPostsToState(GetPosts event) async* {
-  //   yield PostLoading();
-  //   final posts = await _postRepository.getPosts();
-  //   NsksUser user = await _postRepository.getAccountDetails();
-  //   if (posts != null) {
-  //     yield PostsObtained(posts: posts, user: user);
-  //   } else {
-  //     yield PostFailure(error: 'Something very weird just happened');
-  //   }
-  //   try {} on PostException catch (e) {
-  //     yield PostFailure(error: e.message);
-  //   } catch (err) {
-  //     yield PostFailure(error: err.toString());
-  //   }
-  // }
+  Stream<ItemListingState> _mapGetOutfitInsposToState(
+      GetOutfitInspos event) async* {
+    yield ItemListingLoading();
+    final outfitInspos = await _itemListingRepository.getOutfitInspos();
+    if (outfitInspos != null) {
+      yield OutfitInsposObtained(outfitInspos: outfitInspos);
+    } else {
+      yield PostFailure(error: 'Something very weird just happened');
+    }
+    try {} on ItemListingException catch (e) {
+      yield PostFailure(error: e.message);
+    } catch (error) {
+      print(error.toString());
+      yield PostFailure(error: error.toString());
+    }
+  }
 
   // Stream<PostState> _mapAcceptPostToState(AcceptPost event) async* {
   //   yield PostLoading();

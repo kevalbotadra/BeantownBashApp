@@ -41,7 +41,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (event is SubmitSignUp) {
       await _authProvider.registerUserFully(
-          name: event.name, email: event.email, password: event.password);
+          name: event.name, email: event.email, password: event.password, phoneNumber: event.phoneNumber);
 
       yield Authenticated();
     }

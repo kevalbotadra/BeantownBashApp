@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:equatable/equatable.dart';
+import 'package:thriftly/data/models/item_listing.dart';
 import 'package:thriftly/data/models/thriftlyuser.dart';
 
 abstract class ItemListingEvent extends Equatable {
@@ -36,6 +37,15 @@ class CreateItemListing extends ItemListingEvent {
         imageFile,
         location,
       ];
+}
+
+class NavigateToItemListingDetail extends ItemListingEvent {
+    final ItemListing itemListing;
+
+  NavigateToItemListingDetail({required this.itemListing});
+
+  @override
+  List<Object> get props => [itemListing];
 }
 
 class CreateOutfitInspoEvent extends ItemListingEvent {
@@ -72,18 +82,13 @@ class AcceptPost extends ItemListingEvent {
   List<Object> get props => [id];
 }
 
-class GetPosts extends ItemListingEvent {}
+class GetOutfitInspos extends ItemListingEvent {}
+
+class GetItems extends ItemListingEvent {}
 
 class GetAccount extends ItemListingEvent {}
 
-class NavigateToDetailPage extends ItemListingEvent {
-  final String uid;
-
-  NavigateToDetailPage({required this.uid});
-
-  @override
-  List<Object> get props => [uid];
-}
+class NavigateToDetailPage extends ItemListingEvent {}
 
 class NavigateToCreateItemListingForm extends ItemListingEvent {}
 

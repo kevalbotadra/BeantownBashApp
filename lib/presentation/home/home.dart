@@ -6,6 +6,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:thriftly/presentation/create/create.dart';
 import 'package:thriftly/presentation/feed/feed.dart';
+import 'package:thriftly/presentation/shop/shop.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -55,10 +56,8 @@ class _HomeState extends State<Home> {
           });
         },
         children: [
-          Feed(),
-          Container(
-            color: Colors.white,
-          ),
+          FeedRedirect(),
+          ShopRedirect(),
           CreatePageRedirect(),
           Container(
             color: Colors.white,

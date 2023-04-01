@@ -7,13 +7,16 @@ import 'package:thriftly/helpers/firebase_functions.dart';
 class ItemListingProvider {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<List<Map<String, dynamic>>> getPosts() async {
+  Future<List<Map<String, dynamic>>> getOutfitInspos() async {
     List<Map<String, dynamic>> postsMetaData = [];
-    await firestore.collection("posts").get().then((querySnapshot) {
+    await firestore.collection("outfits").get().then((querySnapshot) {
       querySnapshot.docs.forEach((document) {
+        print(document);
         postsMetaData.add(document.data());
       });
     });
+
+    print(postsMetaData);
 
     return postsMetaData;
   }
@@ -45,7 +48,7 @@ class ItemListingProvider {
 
   Future<Map<String, dynamic>?> getPostByUid(String uid) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await firestore.collection("posts").doc(uid).get(); 
+        await firestore.collection("posts").doc(uid).get();
 
     return snapshot.data();
   }
@@ -57,30 +60,29 @@ class ItemListingProvider {
     required File imageFile,
     required String location,
     required String price,
-    required String size, 
+    required String size,
     required String creator,
   }) async {
     String imageFileUrl = await uploadImageToFirebase(imageFile);
 
     DocumentReference<Map<String, dynamic>> post =
-        await firestore.collection("itemListings").add({
+        await firestore.collection("items").add({
       "title": title,
-      "body": description,
-      "createdAt" : createdAt,
+      "description": description,
+      "createdAt": createdAt,
       "imageUrl": imageFileUrl,
       "size": size,
       "price": price,
-      "location" : location,
-      "creator" : creator,
+      "location": location,
+      "creator": creator,
     });
 
-    await firestore.collection("itemListings").doc(post.id).set({
-      "uid" : post.id,
-    }, SetOptions(merge : true));
+    await firestore.collection("items").doc(post.id).set({
+      "uid": post.id,
+    }, SetOptions(merge: true));
 
     return post.get();
   }
-
 
   Future<DocumentSnapshot<Map<String, dynamic>>> createOutfitInspo({
     required String caption,
@@ -91,17 +93,28 @@ class ItemListingProvider {
     String imageFileUrl = await uploadImageToFirebase(imageFile);
 
     DocumentReference<Map<String, dynamic>> post =
-        await firestore.collection("outfitInspo").add({
+        await firestore.collection("outfits").add({
       "caption": caption,
-      "createdAt" : createdAt,
+      "createdAt": createdAt,
       "imageUrl": imageFileUrl,
-      "creator" : creator,
+      "creator": creator,
     });
 
-    await firestore.collection("outfitInspo").doc(post.id).set({
-      "uid" : post.id,
-    }, SetOptions(merge : true));
+    await firestore.collection("outfits").doc(post.id).set({
+      "uid": post.id,
+    }, SetOptions(merge: true));
 
     return post.get();
+  }
+
+  Future<List<Map<String, dynamic>>> getItemListings() async {
+    List<Map<String, dynamic>> itemsMetaData = [];
+    await firestore.collection("items").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        itemsMetaData.add(doc.data());
+      });
+    });
+
+    return itemsMetaData;
   }
 }

@@ -27,6 +27,7 @@ dependencies:
   intl: ^0.17.0
   image_picker: ^0.8.0
   firebase_storage: ^11.0.1
+  flutter_card_swiper: ^4.1.0+2
 
 
 

@@ -24,7 +24,8 @@ class AuthProvider {
   Future<User?> registerUserFully(
       {required String name,
       required String email,
-      required String password}) async {
+      required String password, 
+      required String phoneNumber}) async {
 
         UserCredential userCredential = await _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password);
@@ -40,6 +41,7 @@ class AuthProvider {
       "email": theUser.email,
       "profilePic": "https://robohash.org/" + theUser.uid,
       "name": name,
+      "phoneNumber": phoneNumber,
     });
 
     return user;

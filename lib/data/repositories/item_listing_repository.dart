@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:thriftly/data/models/item_listing.dart';
+import 'package:thriftly/data/models/outfit_inspo.dart';
 import 'package:thriftly/data/models/thriftlyuser.dart';
 import 'package:thriftly/data/providers/item_listing_provider.dart';
 import 'package:thriftly/helpers/firebase_functions.dart';
@@ -19,21 +21,41 @@ class ItemListingRepository {
   //   return post;
   // }
 
-  // Future<List<Post>> getPosts() async {
-  //   List<Map<String, dynamic>> postsMetaData = await _postProvider.getPosts();
-  //   List<Map<String, dynamic>> docs = [];
-  //   List<Post> posts = [];
+  Future<List<OutfitInspo>> getOutfitInspos() async {
+    List<Map<String, dynamic>> postsMetaData =
+        await _itemListingProvider.getOutfitInspos();
+    List<Map<String, dynamic>> docs = [];
+    List<OutfitInspo> outfitInspos = [];
 
-  //   postsMetaData.map((doc) {
-  //     docs.add(doc);
-  //   }).toList();
+    postsMetaData.map((doc) {
+      docs.add(doc);
+    }).toList();
 
-  //   for (Map<String, dynamic> doc in docs) {
-  //     List<NsksUser> volunteers = await getVolunteersByPost(doc);
-  //     posts.add(Post.fromMap(doc, volunteers));
-  //   }
-  //   return posts;
-  // }
+
+    for (Map<String, dynamic> doc in docs) {
+      ThriftlyUser user = await getAnyUserFromFirebaseUserUid(doc["creator"]);
+      outfitInspos.add(OutfitInspo.fromMap(doc, user));
+    }
+    return outfitInspos;
+  }
+
+  Future<List<ItemListing>> getItemListings() async {
+    List<Map<String, dynamic>> itemsMetaData =
+        await _itemListingProvider.getItemListings();
+    List<Map<String, dynamic>> docs = [];
+    List<ItemListing> items = [];
+
+    itemsMetaData.map((doc) {
+      docs.add(doc);
+    }).toList();
+
+    for (Map<String, dynamic> doc in docs) {
+      ThriftlyUser user = await getAnyUserFromFirebaseUserUid(doc["creator"]);
+      items.add(ItemListing.fromMap(doc, user));
+    }
+
+    return items;
+  }
 
   // // Future<void> deletePost(int id) async {
   // //   await _postProvider.deletePost(id);
@@ -85,18 +107,18 @@ class ItemListingRepository {
   }) async {
     Timestamp createdAtStamp = dateTimeToTimestamp(DateTime.now());
 
-
     await _itemListingProvider.createItemListing(
-        title: title,
-        description: description,
-        size: size,
-        price: price,
-        createdAt: createdAtStamp,
-        imageFile: imageFile,
-        location: location,
-        creator: creator.uid,
-        );
+      title: title,
+      description: description,
+      size: size,
+      price: price,
+      createdAt: createdAtStamp,
+      imageFile: imageFile,
+      location: location,
+      creator: creator.uid,
+    );
   }
+
   Future<void> createOutfitInspo({
     required String caption,
     required File imageFile,
@@ -104,12 +126,11 @@ class ItemListingRepository {
   }) async {
     Timestamp createdAtStamp = dateTimeToTimestamp(DateTime.now());
 
-
     await _itemListingProvider.createOutfitInspo(
-        caption: caption,
-        createdAt: createdAtStamp,
-        imageFile: imageFile,
-        creator: creator.uid,
-        );
+      caption: caption,
+      createdAt: createdAtStamp,
+      imageFile: imageFile,
+      creator: creator.uid,
+    );
   }
 }

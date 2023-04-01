@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:thriftly/data/models/outfit_inspo.dart';
 
 class PostCard extends StatelessWidget {
-  const PostCard({Key? key}) : super(key: key);
+  final OutfitInspo outfitInspo;
+  const PostCard({Key? key, required this.outfitInspo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +22,13 @@ class PostCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage("http://gossipsinside.com/wp-content/uploads/2022/12/Duke-Dennis-Bio-Age-Height-YouTube-Channels-Net-Worth-Girlfriends-Gossipsinside.com_.jpg"),
+                      backgroundImage: NetworkImage(
+                          outfitInspo.creator.pfpUrl),
                     ),
                     SizedBox(
                       width: 8,
                     ),
-                    Text("Keval Botadra",
+                    Text(outfitInspo.creator.name,
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -44,7 +47,7 @@ class PostCard extends StatelessWidget {
               ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
-                    "https://www.stylebysavina.com/wp-content/uploads/2022/12/classy-chic-outfits-500x500.png",
+                    outfitInspo.imageUrl,
                     // height: 300,
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
@@ -55,7 +58,7 @@ class PostCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("My new beige pants!",
+                  Text(outfitInspo.caption,
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -69,9 +72,8 @@ class PostCard extends StatelessWidget {
                 height: 2,
               ),
               Text(
-                "March 23, 2022",
-                // DateFormat('MMM dd, yyyy h:mm a')
-                //     .format(DateTime.parse(post.createdAt)),
+                DateFormat('MMM dd, yyyy h:mm a')
+                    .format(DateTime.parse(outfitInspo.createdAt)),
                 style: GoogleFonts.poppins(
                     fontSize: 10,
                     fontWeight: FontWeight.w300,
