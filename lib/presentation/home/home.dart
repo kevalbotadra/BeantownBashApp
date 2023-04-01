@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:thriftly/presentation/create/create.dart';
 import 'package:thriftly/presentation/feed/feed.dart';
 
 class Home extends StatefulWidget {
@@ -58,9 +59,7 @@ class _HomeState extends State<Home> {
           Container(
             color: Colors.white,
           ),
-          Container(
-            color: Colors.white,
-          ),
+          CreatePageRedirect(),
           Container(
             color: Colors.white,
           ),
