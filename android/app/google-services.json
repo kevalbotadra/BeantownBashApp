@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "225683684874",
+    "project_id": "thriftly-bc3f0",
+    "storage_bucket": "thriftly-bc3f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225683684874:android:33e2060e9a0f4d6030e9f3",
+        "android_client_info": {
+          "package_name": "com.example.thriftly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225683684874-881a2qci89pm54i99mqr85c87dockmof.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqG8YRKRVuijtPCN7qxaX9PO5E-PoBVHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225683684874-881a2qci89pm54i99mqr85c87dockmof.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "225683684874-c0p1l3hdqm3buhh4nd9cu2um12pk7b6t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kevalbotadra.thriftly"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
