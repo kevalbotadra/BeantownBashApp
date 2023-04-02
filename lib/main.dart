@@ -12,7 +12,6 @@ import 'package:thriftly/presentation/auth/login_page.dart';
 import 'package:thriftly/presentation/auth/register_page.dart';
 import 'package:thriftly/presentation/home/home.dart';
 import 'package:thriftly/presentation/landing.dart';
-
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -28,6 +27,7 @@ Future<void> main() async {
   ));
 }
 
+//main directory
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
