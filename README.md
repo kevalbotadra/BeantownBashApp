@@ -1,5 +1,7 @@
 # thriftly
 
+![alt text](https://my.beantownbash.org/api/res/images/fchtcsu5ir1v8gtmqbfqaanc)
+
 Fashion + Social + Eco-Friendly
 
 Created by Vamshi Pagidi, Anand Madarapu, Aadi Kulkarni, and Keval Botadra
