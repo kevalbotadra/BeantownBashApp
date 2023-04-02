@@ -1,4 +1,4 @@
-# thriftly
+# thrifty
 
 ![alt text](https://my.beantownbash.org/api/res/images/fchtcsu5ir1v8gtmqbfqaanc)
 
